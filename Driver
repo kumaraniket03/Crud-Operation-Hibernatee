@@ -1,0 +1,109 @@
+package OneToOne;
+
+import java.util.Scanner;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+
+public class Driver {
+public static void main(String[] args) {
+	Scanner kb=new Scanner(System.in);
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("postgres");
+	EntityManager em=emf.createEntityManager();
+	EntityTransaction etr=em.getTransaction();
+	int x;
+	do {
+		System.out.println("Enter 1 for insert");
+		System.out.println("Enter 2 for update");
+		System.out.println("Enter 3 for delete");
+		System.out.println("Enter 4 for fetch");
+		System.out.println("Enter 5 for exit");
+		 x=kb.nextInt();
+		 switch(x) {
+		 case 1:{
+			 System.out.println("Enter id");
+			 int id=kb.nextInt();
+			 System.out.println("Enter marks");
+			 double marks=kb.nextDouble();
+			 System.out.println("Enter name");
+			 String name=kb.next();
+			 
+			 System.out.println("now enter address details");
+			 System.out.println("Enter id");
+			 int ida=kb.nextInt();
+			 System.out.println("enter city");
+			 String city=kb.next();
+			 System.out.println("Enter state");
+			 String state=kb.next();
+			 etr.begin();
+			 Address ad=new Address(ida,city,state);
+			 Student s=new Student(id,name,marks,ad);
+			 em.persist(s);
+			 em.persist(ad);
+			 etr.commit();
+			 System.out.println("Data saved");
+			 break;
+			 
+		 }
+		 case 2:{
+			 System.out.println("Updation of data");
+			 System.out.println("Enter id you want to update");
+			 etr.begin();
+			 int id=kb.nextInt();
+			 Student s=em.find(Student.class, id);
+			 if(s!=null) {
+				 System.out.println("Enter updated id");;
+				 int upid=kb.nextInt();
+				 s.setId(upid);
+				 etr.commit();
+			 }
+			 else
+				 System.out.println("Data not found");
+			 
+		 }
+		 case 3:{
+			 System.out.println("enter the id you want to delete");
+			 int id=kb.nextInt();
+			 etr.begin();
+			 Student s=em.find(Student.class, id);
+			 if(s!=null) {
+				 em.remove(s);
+				 etr.commit();
+				
+			 }
+			 else
+				 System.out.println("Data not found");
+			 break;
+			 
+		 }
+		 case 4:
+		 {
+			 System.out.println("fetching data");
+			 System.out.println("Enter Id you want to fetch");
+			 int id=kb.nextInt();
+			 Student s=em.find(Student.class, id);
+			 if(s!=null) {
+				 System.out.println(s);
+			 }
+			 else {
+				 System.out.println("Data not found");
+			 }
+			 break;
+			 
+		 }
+		 
+		 case 5:{
+			 System.out.println("Thanks visit again");
+			 break;
+		 }
+		 default:
+			 System.out.println("Invalid choice");
+		 }
+		
+		
+	}while(x!=5);
+	}
+	
+	}
