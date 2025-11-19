@@ -1,0 +1,61 @@
+package OneToOne;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+
+@Entity
+
+public class Student {
+	
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", marks=" + marks + ", address=" + address + "]";
+	}
+	public Student() {
+		
+	}
+	public Student(int id, String name, double marks, Address address) {
+		
+		this.id = id;
+		this.name = name;
+		this.marks = marks;
+		this.address = address;
+	}
+	@Id
+	private int id;
+	private String name;
+	private double marks;
+	
+	@OneToOne (cascade=CascadeType.ALL)
+	private Address address;
+public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public double getMarks() {
+		return marks;
+	}
+	public void setMarks(double marks) {
+		this.marks = marks;
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+}
+
+
